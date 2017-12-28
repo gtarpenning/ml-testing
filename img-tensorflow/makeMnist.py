@@ -46,10 +46,11 @@ class MakeMnist(object):
 
     def get_link_array(self):
         for query in self.categories:
-            soup = self._get_soup('https://www.google.com/search?q=' + query +
+            print(query, self.categories[query])
+            soup = self._get_soup('https://www.google.com/search?q=' + self.categories[query] +
                     '&source=lnms&tbm=isch&sa=X')
             for img in soup.findAll('img'):
-                self.links.append([self.categories[query], img.get('src')])
+                self.links.append([query, img.get('src')])
 
     def create_csv(self, filename, data):
         csvFile = open(filename, 'w')
@@ -86,9 +87,7 @@ class MakeMnist(object):
 def main():
     db = MakeMnist()
     db.get_link_array()
-
     db.make_dataset()
-
     db.create_csv('./data/scrape-data.csv', db.final_data)
     db.load_csv('./data/scrape-data.csv')
 
