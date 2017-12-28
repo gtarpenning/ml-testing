@@ -1,0 +1,4 @@
+- add more data to MNIST dataset creator
+- make sure the images scraped are the same format as the training set
+- make the model file a proper class
+- run test on pure scraped-img files as training
