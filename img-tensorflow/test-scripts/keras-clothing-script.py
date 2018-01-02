@@ -16,9 +16,9 @@ data_train = pd.read_csv('./data/fashion-mnist_train.csv')
 data_test = pd.read_csv('./data/scrape-data.csv')
 
 """ Model Variables """
-batch_size = 256
+batch_size = 100
 num_classes = 10
-epochs = 5
+epochs = 50
 
 # Labels and their classes
 CLASSES = {

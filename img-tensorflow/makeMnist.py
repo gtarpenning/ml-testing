@@ -5,6 +5,7 @@ from io import BytesIO
 import numpy as np
 from bs4 import BeautifulSoup as bs
 import csv
+import random
 
 
 class MakeMnist(object):
@@ -45,10 +46,16 @@ class MakeMnist(object):
         return bs(requests.get(url).text,'html.parser')
 
     def get_link_array(self):
+        """ Alt Method """
+        """
+        startIndex = 0
+        searchUrl = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + searchTerm + "&start=" + startIndex
+        f = fetcher.open(searchUrl)
+        deserialized_output = simplejson.load(f)
+        """
         for query in self.categories:
-            print(query, self.categories[query])
             soup = self._get_soup('https://www.google.com/search?q=' + self.categories[query] +
-                    '&source=lnms&tbm=isch&sa=X')
+                    '&source=lnms&tbm=isch&sa=X&n=100')
             for img in soup.findAll('img'):
                 self.links.append([query, img.get('src')])
 
@@ -74,14 +81,17 @@ class MakeMnist(object):
             for row in reader:
                 data.append(row)
 
-            print(len(data), len(data[0]))
-
     def make_dataset(self):
         labelRow = list(range(0, 785))
         labelRow[0] = 'label'
         self.final_data.append(labelRow)
+        unshuffled_data = []
         for link in self.links:
-            self.final_data.append(self.format_data(link[0], self.get_pixels(link[1])))
+            unshuffled_data.append(self.format_data(link[0], self.get_pixels(link[1])))
+        random.shuffle(unshuffled_data)
+
+        for item in unshuffled_data:
+            self.final_data.append(item)
 
 
 def main():
