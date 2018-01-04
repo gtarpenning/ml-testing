@@ -28,6 +28,7 @@ class MakeMnist(object):
     def get_pixels(self, link):
         img = resizeimage.resize_cover(self.get_img(link), [28, 28])
         WIDTH, HEIGHT = img.size
+        img = self.increase_contrast(img, 100)
         data = list(img.getdata())
         data = [data[offset:offset+WIDTH] for offset in range(0, WIDTH*HEIGHT, WIDTH)]
         return np.array(data)
@@ -93,13 +94,18 @@ class MakeMnist(object):
         for item in unshuffled_data:
             self.final_data.append(item)
 
+    def increase_contrast(self, img, level):
+        factor = (259 * (level + 255)) / (255 * (259 - level))
+        def contrast(c):
+            return 128 + factor * (c - 128)
+        return img.point(contrast)
+
 
 def main():
     db = MakeMnist()
     db.get_link_array()
     db.make_dataset()
-    db.create_csv('./data/scrape-data.csv', db.final_data)
-    db.load_csv('./data/scrape-data.csv')
+    db.create_csv('./data/hc-scrape-data.csv', db.final_data)
 
 
 if __name__ == '__main__':

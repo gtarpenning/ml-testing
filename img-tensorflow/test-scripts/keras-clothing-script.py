@@ -12,13 +12,13 @@ from keras.models import load_model
 from random import randint
 
 
-data_train = pd.read_csv('./data/fashion-mnist_train.csv')
-data_test = pd.read_csv('./data/scrape-data.csv')
+data_train = pd.read_csv('../data/f-mnist-train.csv')
+data_test = pd.read_csv('../data/f-mnist-test.csv')
 
 """ Model Variables """
-batch_size = 100
+batch_size = 200
 num_classes = 10
-epochs = 50
+epochs = 5
 
 # Labels and their classes
 CLASSES = {

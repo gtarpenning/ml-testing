@@ -15,8 +15,8 @@ from random import randint
 class MnistModel(object):
     def __init__(self):
         """ Model Defaults """
-        self.batch_size = 100
-        self.epochs = 50
+        self.batch_size = 200
+        self.epochs = 5
         self.num_classes = 10
         self.pic_size = [28, 28]
 
@@ -92,8 +92,8 @@ class MnistModel(object):
 
 def main():
     clothing_mnist = MnistModel()
-    clothing_mnist.set_model_vars(100, 10, 10)
-    clothing_mnist.load_data('./data/f-mnist-train.csv', './data/f-mnist-test.csv')
+    #clothing_mnist.set_model_vars(100, 5, 10)
+    clothing_mnist.load_data('./data/f-mnist-train.csv', './data/hc-scrape-data.csv')
     clothing_mnist.format_data()
     clothing_mnist.construct_model()
     clothing_mnist.run()
